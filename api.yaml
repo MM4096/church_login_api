@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: Student API
+  description: Student Demo API
+  contact:
+    name: mm4096
+    url: mm4096.github.io
+  version: 1.0.0
+servers:
+  - url: http://mm4096.github.io/NXChurchLogin
+paths:
+  /users/findbyname:
+    description: get users
+    get:
+      description: Get user
+      parameters: 
+        - in: query
+          name: name
+          required: true
+          schema:
+            type: string
+            example: Jeffery
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+          
+        
+  /user:
+    description: Updates user if exists, otherwise creates a new one
+    put:
+      description: Updates user if exists, otherwise creates a new one
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        201:
+          description: Success!
+
+  /reports:
+    description: Gets report for given date
+    get:
+      description: get all reports and dates exported last
+      responses: 
+        200:
+          description: OK
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/ExportDates'
+              
+
+  /reports/{date}:
+    description: get a specific date's report
+    get:
+      parameters: 
+        - in: path
+          name: date
+          required: true
+          schema:
+            type: string
+            example: yyyy/mm/dd
+      responses:
+        200:
+          description: OK
+          content:
+            text/csv: {}
+              
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        UserFirstName:
+            type: string
+            example: Jeffery
+        UserLastName:
+          type: string
+          example: Donavan
+        UserGender:
+          type: string
+          example: M
+        UserBirthday:
+          type: string
+          example: yyyy/mm/dd
+        UserParents:
+          type: string
+          example: Bobby and Angela
+        UserPhone:
+          type: string
+          example: 02112345678
+        UserEmail:
+          type: string
+          example: goo.gle@gmail.com
+        UserNotes:
+          type: string
+          example: He is allergic to bread
+        UserLastCheckedIn:
+          type: string
+          example: yyyy/mm/dd
+    Users:
+      type: array
+      items:
+        properties:
+          UserFirstName:
+            type: string
+            example: Jeffery
+          UserLastName:
+            type: string
+            example: Donavan
+          UserGender:
+            type: string
+            example: M
+          UserBirthday:
+            type: string
+            example: yyyy/mm/dd
+          UserParents:
+            type: string
+            example: Bobby and Angela
+          UserPhone:
+            type: string
+            example: 02112345678
+          UserEmail:
+            type: string
+            example: goo.gle@gmail.com
+          UserNotes:
+            type: string
+            example: He is allergic to bread
+          UserLastCheckedIn:
+            type: string
+            example: yyyy/mm/dd
+    ExportDates:
+      type: array
+      items:
+        properties: 
+          ReportDate:
+            type: string
+            example: yyyy/mm/dd
+          ReportExportDate:
+            type: string
+            example: yyyy/mm/dd 
+            
